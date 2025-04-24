@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>自我介紹</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <audio id="homepage-audio" src="your-audio-file.mp3"></audio>
+  <ul class="menu">
+    <li><a href="#home" onclick="hideAll()">首頁</a></li>
+    <li><a href="#about" onclick="showImage()">自我介紹</a></li>
+    <li class="has-submenu">
+      <a href="#portfolio" onclick="toggleSubmenu()">作品集</a>
+      <ul class="submenu">
+        <li><a href="#" onclick="showIframe('https://hackmd.io/@074105/rywZ9Juoyg')">第一周</a></li>
+        <li><a href="#" onclick="showIframe('https://hackmd.io/@074105/rJ9dIX-hke')">第二周</a></li>
+        <li><a href="#" onclick="showIframe('https://hackmd.io/@074105/S1lEaE5hyg')">第三周</a></li>
+        <li><a href="#" onclick="showIframe('https://hackmd.io/@074105/S1UbkS1Jxx')">成果</a></li>
+      </ul>
+    </li>
+    <li><a href="#quiz" onclick="showQuiz()">測驗卷</a></li>
+    <li><a href="#tutorials" onclick="showVideo()">教學影片</a></li>
+  </ul>
+  
+
+  <!-- 自我介紹圖片區域 -->
+  <div id="introImage" class="intro-image">
+    <img id="toggleImage" src="圖片1.png" alt="自我介紹圖片" onclick="toggleIntroImage()">
+  </div>
+
+  <!-- 影片顯示區 -->
+  <div id="videoContainer" class="video-container">
+    <video controls>
+      <source src="https://cfchen58.synology.me/%E7%A8%8B%E5%BC%8F%E8%A8%AD%E8%A8%882024/A2/week1/20250221_092037.mp4" type="video/mp4">
+      您的瀏覽器不支援影片播放。
+    </video>
+  </div>
+
+  <!-- iframe 顯示區 -->
+  <iframe id="contentFrame" class="content-frame" src="" frameborder="0"></iframe>
+
+  <!-- 引入 p5.js 和 sketch.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js"></script>
+  <script src="sketch.js"></script>
+
+  <script>
+    let isImage1 = true; // 用於追蹤當前顯示的圖片
+
+    // 切換圖片
+    function toggleIntroImage() {
+      const imageElement = document.getElementById('toggleImage');
+      if (isImage1) {
+        imageElement.src = '圖片2.png'; // 替換為圖片2的路徑
+      } else {
+        imageElement.src = '圖片1.png'; // 替換為圖片1的路徑
+      }
+      isImage1 = !isImage1; // 切換狀態
+    }
+
+    // 顯示圖片
+    function showImage() {
+      hideAll(); // 隱藏其他內容
+      const introImage = document.getElementById('introImage');
+      introImage.style.display = 'block'; // 顯示圖片
+    }
+
+        // 顯示測驗卷連結
+        function showQuiz() {
+      hideAll(); // 隱藏其他內容
+      const iframe = document.getElementById('contentFrame');
+      iframe.style.display = 'block'; // 顯示 iframe
+      iframe.src = 'https://5lll.github.io/qa/'; // 嵌入指定連結
+    }
+
+    // 顯示影片
+    function showVideo() {
+      hideAll(); // 隱藏其他內容
+      const videoContainer = document.getElementById('videoContainer');
+      videoContainer.style.display = 'block'; // 顯示影片
+    }
+
+    // 隱藏所有內容
+    function hideAll() {
+      const introImage = document.getElementById('introImage');
+      const iframe = document.getElementById('contentFrame');
+      const videoContainer = document.getElementById('videoContainer');
+      const submenu = document.querySelector('.submenu');
+      introImage.style.display = 'none'; // 隱藏圖片
+      iframe.style.display = 'none'; // 隱藏 iframe
+      videoContainer.style.display = 'none'; // 隱藏影片
+      submenu.style.display = 'none'; // 隱藏子選單
+    }
+
+    // 顯示 iframe 並更新內容
+    function showIframe(url) {
+      hideAll(); // 隱藏其他內容
+      const iframe = document.getElementById('contentFrame');
+      iframe.style.display = 'block'; // 顯示 iframe
+      iframe.src = url; // 更新 iframe 的內容
+    }
+
+    // 清除 iframe 的內容並隱藏
+    function clearIframe() {
+      const iframe = document.getElementById('contentFrame');
+      iframe.src = ''; // 清空內容
+      iframe.style.display = 'none'; // 隱藏 iframe
+    }
+
+    // 切換子選單顯示與隱藏
+    function toggleSubmenu() {
+      const submenu = document.querySelector('.submenu');
+      if (submenu.style.display === 'block') {
+        submenu.style.display = 'none'; // 隱藏子選單
+      } else {
+        submenu.style.display = 'block'; // 顯示子選單
+      }
+    }
+
+    // 播放首頁音檔
+    document.querySelector('.menu a[href="#home"]').addEventListener('click', () => {
+      const audio = document.getElementById('homepage-audio');
+      audio.play();
+
+      setTimeout(() => {
+        audio.pause();
+        audio.currentTime = 0;
+      }, 5000);
+    });
+  </script>
+</body>
+</html>
